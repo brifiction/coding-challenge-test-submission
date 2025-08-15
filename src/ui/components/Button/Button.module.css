@@ -25,11 +25,16 @@
 */
 
 .primary {
-  background-color: var(--color-brand);
+  background-color: var(--color-primary);
 }
 
 .secondary {
   background-color: transparent;
   color: var(--color-brand);
-  border: 2px solid var(--color-brand);
+  border: 2px solid var(--color-secondary);
+}
+
+.loading {
+  background-color: var(--color-loading);
+  cursor: not-allowed;
 }

@@ -26,8 +26,19 @@ export const useFormFields = () => {
     }));
   };
 
+  const resetFormFields = () => {
+    setFormFields({
+      postCode: '',
+      houseNumber: '',
+      firstName: '',
+      lastName: '',
+      selectedAddress: ''
+    });
+  };
+
   return {
     formFields,
-    handleChange
+    handleChange,
+    resetFormFields
   };
 };

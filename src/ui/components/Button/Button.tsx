@@ -21,14 +21,16 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   const buttonClasses = [
     $.button,
-    variant === "primary" ? $.primary : $.secondary
-  ].join(" ");
+    variant === "primary" ? $.primary : $.secondary,
+    loading ? $.loading : ""
+  ].filter(Boolean).join(" ");
 
   return (
     <button
       className={buttonClasses}
       type={type}
       onClick={onClick}
+      disabled={loading}
     >
       {children}
     </button>

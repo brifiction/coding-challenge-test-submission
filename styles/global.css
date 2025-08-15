@@ -30,6 +30,9 @@ code {
   --width-content: 30rem;
   --font-primary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --color-primary: #413ef7;
+  --color-secondary: #ccc;
+  --color-loading: #ccc;
 }
 
 * {
