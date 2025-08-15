@@ -28,6 +28,7 @@ function App() {
    */
   const [error, setError] = React.useState<undefined | string>(undefined);
   const [addresses, setAddresses] = React.useState<AddressType[]>([]);
+  const [isLoadingAddresses, setIsLoadingAddresses] = React.useState(false);
   /**
    * Redux actions
    */
@@ -42,8 +43,39 @@ function App() {
    * - Ensure to clear previous search results on each click
    * - Bonus: Add a loading state in the UI while fetching addresses
    */
+  const clearAddressSearchResults = () => {
+    setAddresses([]);
+    setError(undefined);
+    setIsLoadingAddresses(true);
+  }
+
   const handleAddressSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    clearAddressSearchResults();
+    
+    const BASE_URL = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000';
+    const url = `${BASE_URL}/api/getAddresses?postcode=${formFields.postCode}&streetnumber=${formFields.houseNumber}`;
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (data.status === 'ok' && data.details) {
+        const processedAddresses = data.details.map((address: any, index: number) => ({
+          ...address,
+          houseNumber: formFields.houseNumber,
+          id: `address-${index}-${Date.now()}`
+        }));
+        setAddresses(processedAddresses);
+      } else {
+        setError(data.errormessage || 'No addresses found');
+      }
+    } catch (error) {
+      setError('Failed to fetch addresses');
+    } finally {
+      setIsLoadingAddresses(false);
+    }
   };
 
   /** TODO: Add basic validation to ensure first name and last name fields aren't empty
@@ -101,7 +133,9 @@ function App() {
                 placeholder="House number"
               />
             </div>
-            <Button type="submit">Find</Button>
+            <Button type="submit" loading={isLoadingAddresses}>
+              {isLoadingAddresses ? 'Finding...' : 'Find'}
+            </Button>
           </fieldset>
         </form>
         {addresses.length > 0 &&
