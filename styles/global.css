@@ -47,6 +47,27 @@ main {
   padding: 2rem;
 }
 
+/* Responsive design improvements for smaller screens */
+@media (max-width: 767px) {
+  :root {
+    --width-input: 100%;
+    --width-content: 100%;
+  }
+  
+  body {
+    font-size: 16px;
+  }
+  
+  main {
+    padding: 1rem;
+  }
+  
+  fieldset {
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+  }
+}
+
 small {
   font-weight: normal;
   font-size: 0.65em;
